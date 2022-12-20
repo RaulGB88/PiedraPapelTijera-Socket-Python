@@ -61,7 +61,7 @@ def treatMessage(message):
         return send_message.lower()
     elif message == CONTINUE :
         send_message = input(CONTINUE)
-        return send_message
+        return send_message.lower()
     elif message != '':
         print(message)
         return message
