@@ -22,6 +22,7 @@ SAME = 'Empate.'
 MACHINE = 'la máquina.'
 
 ERROR = 'ERROR'
+BYE = 'bye'
 
 
 def server_program():
@@ -52,20 +53,15 @@ def server_program():
 
 
 def messageRecieved(socket_atiende, message):
-    cerrar = False
 
     # Send message
     socket_atiende.sendall(message.encode())
 
-    while not cerrar:
-        # Recieve message
-        data = socket_atiende.recv(1024)
+    # Recieve message
+    data = socket_atiende.recv(1024)
 
-        if data == fin_mensaje:
-            cerrar = True
-        else:
-            mensaje = data.decode()
-            return mensaje
+    mensaje = data.decode()
+    return mensaje
 
 
 def execute(socket_atiende, addr_cliente):
@@ -104,13 +100,10 @@ def execute(socket_atiende, addr_cliente):
             # Send winner
             messageRecieved(socket_atiende, winner)
 
-            # Get name of Client
+            # Get message to disable of Client
             message = messageRecieved(socket_atiende, CONTINUE)
-            socket_atiende.sendall(message.encode())
 
-            data = socket_atiende.recv(1024)
-
-            if data == fin_mensaje:
+            if message == fin_mensaje or message == BYE:
                 cerrar = True
 
 

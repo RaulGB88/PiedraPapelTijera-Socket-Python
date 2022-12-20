@@ -25,10 +25,17 @@ def client_program():
 
     # 2- Conectamos el Socket cliente al servidor
     socket_cliente.connect((HOST, PORT))
+
+    execute(socket_cliente)
+
+
+def execute(socket_cliente):
+    
     init_message = 'Conectado con el servidor' # El programa cliente escribe esto al servidor
 
     with socket_cliente:
         while init_message != BYE:
+        
             # Recieve data
             data = socket_cliente.recv(1024)
 
@@ -54,7 +61,7 @@ def treatMessage(message):
         return send_message.lower()
     elif message == CONTINUE :
         send_message = input(CONTINUE)
-        return send_message.lower()
+        return send_message
     elif message != '':
         print(message)
         return message
